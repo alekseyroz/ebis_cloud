@@ -1,4 +1,4 @@
-"""Tests for ServiceRequestsMixin (ebis_cloud/_service_requests.py)."""
+"""Tests for ServiceRequestsMixin (veryon_wc/_service_requests.py)."""
 
 from __future__ import annotations
 

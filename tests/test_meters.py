@@ -1,4 +1,4 @@
-"""Tests for MetersMixin (ebis_cloud/_meters.py)."""
+"""Tests for MetersMixin (veryon_wc/_meters.py)."""
 
 from __future__ import annotations
 

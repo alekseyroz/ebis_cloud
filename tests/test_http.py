@@ -1,4 +1,4 @@
-"""Tests for the shared HTTP layer in ebis_cloud/_http.py.
+"""Tests for the shared HTTP layer in veryon_wc/_http.py.
 
 Verifies (against the real, unmodified _http.py):
 - Basic Auth header is base64(username:password).
@@ -15,11 +15,11 @@ import base64
 import httpx
 import pytest
 
-from ebis_cloud import EbisClient
+from veryon_wc import WcClient
 
 
 def test_auth_header_is_base64_of_username_colon_password():
-    client = EbisClient("https://host.test/api", "alice", "s3cret")
+    client = WcClient("https://host.test/api", "alice", "s3cret")
     headers = client._auth_headers()
 
     expected_token = base64.b64encode(b"alice:s3cret").decode()
@@ -27,7 +27,7 @@ def test_auth_header_is_base64_of_username_colon_password():
 
 
 def test_auth_header_changes_with_credentials():
-    client = EbisClient("https://host.test/api", "bob", "hunter2")
+    client = WcClient("https://host.test/api", "bob", "hunter2")
     headers = client._auth_headers()
 
     expected_token = base64.b64encode(b"bob:hunter2").decode()
@@ -45,7 +45,7 @@ def test_get_sends_query_params_and_auth_header():
         return httpx.Response(200, json={"ok": True})
 
     transport = httpx.MockTransport(handler)
-    client = EbisClient("https://host.test/api", "alice", "s3cret")
+    client = WcClient("https://host.test/api", "alice", "s3cret")
 
     def get(self, endpoint, params=None):
         with httpx.Client(transport=transport, timeout=30) as http_client:
@@ -57,7 +57,7 @@ def test_get_sends_query_params_and_auth_header():
             resp.raise_for_status()
             return resp.json()
 
-    client.get = get.__get__(client, EbisClient)
+    client.get = get.__get__(client, WcClient)
 
     result = client.get("workorder/lists", params={"name": "CityID"})
 
@@ -78,7 +78,7 @@ def test_post_sends_json_body_and_content_type():
         return httpx.Response(200, json={"Data": {"ID": 42}})
 
     transport = httpx.MockTransport(handler)
-    client = EbisClient("https://host.test/api", "alice", "s3cret")
+    client = WcClient("https://host.test/api", "alice", "s3cret")
 
     def post(self, endpoint, body):
         with httpx.Client(transport=transport, timeout=30) as http_client:
@@ -90,7 +90,7 @@ def test_post_sends_json_body_and_content_type():
             resp.raise_for_status()
             return resp.json()
 
-    client.post = post.__get__(client, EbisClient)
+    client.post = post.__get__(client, WcClient)
 
     result = client.post("workorder", {"CityID": [1, 2]})
 
@@ -112,7 +112,7 @@ def test_get_raises_on_non_2xx_status(status_code):
         return httpx.Response(status_code, json={"error": "boom"})
 
     transport = httpx.MockTransport(handler)
-    client = EbisClient("https://host.test/api", "alice", "s3cret")
+    client = WcClient("https://host.test/api", "alice", "s3cret")
 
     def get(self, endpoint, params=None):
         with httpx.Client(transport=transport, timeout=30) as http_client:
@@ -124,7 +124,7 @@ def test_get_raises_on_non_2xx_status(status_code):
             resp.raise_for_status()
             return resp.json()
 
-    client.get = get.__get__(client, EbisClient)
+    client.get = get.__get__(client, WcClient)
 
     with pytest.raises(httpx.HTTPStatusError) as exc_info:
         client.get("workorder/lists")
@@ -137,7 +137,7 @@ def test_post_raises_on_non_2xx_status():
         return httpx.Response(422, json={"error": "invalid"})
 
     transport = httpx.MockTransport(handler)
-    client = EbisClient("https://host.test/api", "alice", "s3cret")
+    client = WcClient("https://host.test/api", "alice", "s3cret")
 
     def post(self, endpoint, body):
         with httpx.Client(transport=transport, timeout=30) as http_client:
@@ -149,7 +149,7 @@ def test_post_raises_on_non_2xx_status():
             resp.raise_for_status()
             return resp.json()
 
-    client.post = post.__get__(client, EbisClient)
+    client.post = post.__get__(client, WcClient)
 
     with pytest.raises(httpx.HTTPStatusError) as exc_info:
         client.post("workorder", {})
@@ -158,5 +158,5 @@ def test_post_raises_on_non_2xx_status():
 
 
 def test_client_strips_trailing_slash_from_base_url():
-    client = EbisClient("https://host.test/api/", "alice", "s3cret")
+    client = WcClient("https://host.test/api/", "alice", "s3cret")
     assert client._base_url == "https://host.test/api"

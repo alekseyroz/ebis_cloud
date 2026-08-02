@@ -1,4 +1,4 @@
-"""EbisClient — the main entry point for the ebis_cloud library."""
+"""WcClient — the main entry point for the veryon_wc library."""
 
 from ._http import HttpMixin
 from ._workorders import WorkordersMixin
@@ -14,7 +14,7 @@ from ._users import UsersMixin
 from ._vendors import VendorsMixin
 
 
-class EbisClient(
+class WcClient(
     HttpMixin,
     WorkordersMixin,
     EquipmentMixin,
@@ -28,7 +28,7 @@ class EbisClient(
     UsersMixin,
     VendorsMixin,
 ):
-    """Client for the eBis Cloud REST API."""
+    """Client for the Veryon Workcenter (WC) REST API."""
 
     def __init__(self, base_url: str, username: str, password: str) -> None:
         self._base_url = base_url.rstrip("/")

@@ -1,4 +1,4 @@
-"""Tests for PmMixin (ebis_cloud/_pm.py)."""
+"""Tests for PmMixin (veryon_wc/_pm.py)."""
 
 from __future__ import annotations
 

@@ -47,7 +47,7 @@ class ServiceRequestsMixin:
         debug_notifications: bool = False,
     ) -> dict:
         """
-        Add or update a service request in eBis Cloud.
+        Add or update a service request in Veryon Workcenter (WC).
 
         Use get_service_request_addupdate_lists() to find valid IDs for
         StatusID, CategoryID, and PriorityID.

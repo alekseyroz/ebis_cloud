@@ -255,7 +255,7 @@ class VendorsMixin:
         language: str | None = None,
     ) -> dict:
         """
-        Add or update one or more vendors in eBis Cloud.
+        Add or update one or more vendors in Veryon Workcenter (WC).
 
         Supports two calling modes:
         - **Batch mode**: Pass a list of vendor dicts via `vendor_batch`. Each dict must

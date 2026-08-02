@@ -1,7 +1,7 @@
 [project]
-name = "ebis-cloud"
+name = "veryon-wc"
 version = "0.1.0"
-description = "Python client library for the eBis Cloud REST API"
+description = "Python client library for the Veryon Workcenter (WC) REST API"
 requires-python = ">=3.14"
 dependencies = [
     "httpx>=0.28.1",
@@ -17,4 +17,4 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["ebis_cloud"]
+packages = ["veryon_wc"]

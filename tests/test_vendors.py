@@ -1,4 +1,4 @@
-"""Tests for VendorsMixin (ebis_cloud/_vendors.py)."""
+"""Tests for VendorsMixin (veryon_wc/_vendors.py)."""
 
 from __future__ import annotations
 

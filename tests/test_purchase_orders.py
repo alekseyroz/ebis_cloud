@@ -1,4 +1,4 @@
-"""Tests for PurchaseOrdersMixin (ebis_cloud/_purchase_orders.py)."""
+"""Tests for PurchaseOrdersMixin (veryon_wc/_purchase_orders.py)."""
 
 from __future__ import annotations
 

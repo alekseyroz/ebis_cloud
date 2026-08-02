@@ -252,7 +252,7 @@ class UsersMixin:
         subscription_last_alert: str | None = None,
     ) -> dict:
         """
-        Add or update one or more users in eBis Cloud.
+        Add or update one or more users in Veryon Workcenter (WC).
 
         Supports batch mode (user_batch) or single-record mode.
 

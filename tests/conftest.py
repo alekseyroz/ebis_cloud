@@ -1,6 +1,6 @@
-"""Shared pytest fixtures for the ebis_cloud test suite.
+"""Shared pytest fixtures for the veryon_wc test suite.
 
-Provides an EbisClient wired to an httpx.MockTransport so tests can assert on
+Provides a WcClient wired to an httpx.MockTransport so tests can assert on
 outgoing requests (method, URL, params, JSON body, auth headers) without any
 real network access, and control the mocked JSON response per test.
 """
@@ -13,9 +13,9 @@ from dataclasses import dataclass, field
 import httpx
 import pytest
 
-from ebis_cloud import EbisClient
+from veryon_wc import WcClient
 
-BASE_URL = "https://example.ebiscloud.test/api"
+BASE_URL = "https://example.veryonwc.test/api"
 USERNAME = "test-user"
 PASSWORD = "test-pass"
 
@@ -61,9 +61,9 @@ class CapturedRequest:
 
 @dataclass
 class MockApi:
-    """Test double bundling the EbisClient, the captured request, and a settable response."""
+    """Test double bundling the WcClient, the captured request, and a settable response."""
 
-    client: EbisClient
+    client: WcClient
     captured: CapturedRequest
     _response_payload: dict = field(default_factory=dict)
     _response_status: int = 200
@@ -84,7 +84,7 @@ def mock_api() -> MockApi:
 
     transport = httpx.MockTransport(handler)
 
-    client = EbisClient(BASE_URL, USERNAME, PASSWORD)
+    client = WcClient(BASE_URL, USERNAME, PASSWORD)
 
     # Patch get/post on the instance to route through the mock transport while
     # reusing the exact same request-building logic as the real HttpMixin.
@@ -108,8 +108,8 @@ def mock_api() -> MockApi:
             resp.raise_for_status()
             return resp.json()
 
-    client.get = get.__get__(client, EbisClient)
-    client.post = post.__get__(client, EbisClient)
+    client.get = get.__get__(client, WcClient)
+    client.post = post.__get__(client, WcClient)
 
     api = MockApi(client=client, captured=captured)
 

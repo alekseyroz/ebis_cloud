@@ -1,4 +1,4 @@
-"""Tests for OtcMixin (ebis_cloud/_otc.py)."""
+"""Tests for OtcMixin (veryon_wc/_otc.py)."""
 
 from __future__ import annotations
 

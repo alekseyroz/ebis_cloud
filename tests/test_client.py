@@ -1,22 +1,22 @@
-"""Tests that EbisClient correctly composes all 11 domain mixins."""
+"""Tests that WcClient correctly composes all 11 domain mixins."""
 
 from __future__ import annotations
 
 import inspect
 
-from ebis_cloud import EbisClient
-from ebis_cloud._equipment import EquipmentMixin
-from ebis_cloud._http import HttpMixin
-from ebis_cloud._inventory import InventoryMixin
-from ebis_cloud._meters import MetersMixin
-from ebis_cloud._otc import OtcMixin
-from ebis_cloud._parts import PartsMixin
-from ebis_cloud._pm import PmMixin
-from ebis_cloud._purchase_orders import PurchaseOrdersMixin
-from ebis_cloud._service_requests import ServiceRequestsMixin
-from ebis_cloud._users import UsersMixin
-from ebis_cloud._vendors import VendorsMixin
-from ebis_cloud._workorders import WorkordersMixin
+from veryon_wc import WcClient
+from veryon_wc._equipment import EquipmentMixin
+from veryon_wc._http import HttpMixin
+from veryon_wc._inventory import InventoryMixin
+from veryon_wc._meters import MetersMixin
+from veryon_wc._otc import OtcMixin
+from veryon_wc._parts import PartsMixin
+from veryon_wc._pm import PmMixin
+from veryon_wc._purchase_orders import PurchaseOrdersMixin
+from veryon_wc._service_requests import ServiceRequestsMixin
+from veryon_wc._users import UsersMixin
+from veryon_wc._vendors import VendorsMixin
+from veryon_wc._workorders import WorkordersMixin
 
 DOMAIN_MIXINS = [
     WorkordersMixin,
@@ -42,7 +42,7 @@ def _public_methods(cls) -> set[str]:
 
 
 def test_client_constructor_sets_base_url_username_password():
-    client = EbisClient("https://host.test/api", "alice", "s3cret")
+    client = WcClient("https://host.test/api", "alice", "s3cret")
     assert client._base_url == "https://host.test/api"
     assert client._username == "alice"
     assert client._password == "s3cret"
@@ -50,12 +50,12 @@ def test_client_constructor_sets_base_url_username_password():
 
 def test_client_inherits_from_http_mixin_and_all_11_domain_mixins():
     for mixin in [HttpMixin, *DOMAIN_MIXINS]:
-        assert issubclass(EbisClient, mixin), f"EbisClient must inherit {mixin.__name__}"
+        assert issubclass(WcClient, mixin), f"WcClient must inherit {mixin.__name__}"
     assert len(DOMAIN_MIXINS) == 11
 
 
 def test_client_exposes_every_method_from_every_domain_mixin_as_callable():
-    client = EbisClient("https://host.test/api", "alice", "s3cret")
+    client = WcClient("https://host.test/api", "alice", "s3cret")
 
     expected_methods: set[str] = set()
     for mixin in DOMAIN_MIXINS:

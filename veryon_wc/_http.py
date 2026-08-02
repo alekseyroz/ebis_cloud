@@ -1,4 +1,4 @@
-"""Base HTTP client mixin for eBis Cloud API."""
+"""Base HTTP client mixin for Veryon Workcenter (WC) API."""
 
 from base64 import b64encode
 from typing import Any
